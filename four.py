@@ -1,5 +1,13 @@
-# do something with a file thats been created
+# do something with variables
 import csv
+
+myint = 7
+print(myint)
+
+# loops
+primes = [2, 3, 5, 7]
+for prime in primes:
+    print(prime)
 
 with open('Timesheets Report.csv', 'r') as file, open('hours-3.csv', 'w', newline='') as output_file, open('riley-3.csv', 'w', newline='') as output_file2:
     reader = csv.reader(file)
