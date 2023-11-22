@@ -1,10 +1,17 @@
 import csv
 import datetime
+# from dotenv import load_dotenv
+
+# load_dotenv()  # Load the .env file
+
+# Get the string from the environment variable
+# my_string = os.getenv('MY_STRING')
 
 names = []
 overtime = 10
 dates = []
-exceptions = "Michelle Nino De Guzman"
+exceptions = "Michelle Nino De Guzman" # ! this needs to be in a hidden file
+
 overtime_8 = 8
 date_created = datetime.datetime.now()  # Get the current date and time
 date_str = date_created.strftime("%Y-%m-%d")  # Format the date as a string
@@ -13,9 +20,7 @@ with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overti
   reader = csv.reader(csvfile)
   writer = csv.writer(output_file)
   
-  writer.writerow(["Sierra Lighting", "Overtime Calculator"])
-  writer.writerow(["Overtime", overtime , "hours per day"])
-  writer.writerow([exceptions , overtime_8,  "hours per day"])
+  writer.writerow(["Overtime Calculator"])
   
   # names
   for row in reader:
@@ -41,6 +46,10 @@ with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overti
   
   
   writer.writerow(['Date Range', dates[0], dates[-1]]);
+  writer.writerow([]);
+  
+  writer.writerow(["Overtime", overtime , "hours per day"])
+  writer.writerow([exceptions , overtime_8,  "hours per day"])
   writer.writerow([]);
   
   writer.writerow(['Name','Date','Overtime'])
