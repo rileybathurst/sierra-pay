@@ -1,18 +1,21 @@
 import csv
+import datetime
 
 names = []
 overtime = 10
 dates = []
 exceptions = "Michelle Nino De Guzman"
 overtime_8 = 8
+date_created = datetime.datetime.now()  # Get the current date and time
+date_str = date_created.strftime("%Y-%m-%d")  # Format the date as a string
 
-with open('Timesheets Report.csv', newline='') as csvfile, open('exports/overtime.csv', 'w', newline='') as output_file:
+with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overtime_{date_str}.csv', 'w', newline='') as output_file:
   reader = csv.reader(csvfile)
   writer = csv.writer(output_file)
   
-  writer.writerow(['Name','Date','Overtime'])
+  writer.writerow(["Sierra Lighting", "Overtime Calculator"])
   writer.writerow(["Overtime", overtime , "hours per day"])
-  writer.writerow(["Except ", exceptions , overtime_8,  "hours per day"])
+  writer.writerow([exceptions , overtime_8,  "hours per day"])
   
   # names
   for row in reader:
@@ -32,10 +35,15 @@ with open('Timesheets Report.csv', newline='') as csvfile, open('exports/overtim
       dates.append(row[1])
       # print(row[1])
   csvfile.seek(0)
-
-  writer.writerow(['Start date', dates[0]]);
-  writer.writerow(['End date', dates[-1]]);
+  
+  sorted_dates = sorted([datetime.datetime.strptime(date, "%b %d, %Y") for date in dates])
+  dates = [date.strftime("%b %d, %Y") for date in sorted_dates]
+  
+  
+  writer.writerow(['Date Range', dates[0], dates[-1]]);
   writer.writerow([]);
+  
+  writer.writerow(['Name','Date','Overtime'])
   
   for name in names:
       if name == exceptions:
