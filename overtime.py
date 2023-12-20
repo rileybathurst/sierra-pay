@@ -7,10 +7,16 @@ import datetime
 # Get the string from the environment variable
 # my_string = os.getenv('MY_STRING')
 
+with open('.env', 'r') as f:
+    for line in f:
+        if 'exceptions' in line:
+            exceptions = line.strip()
+
+print(f"The contents of the .gitignore file are: {exceptions}")
+
 names = []
 overtime = 10
 dates = []
-exceptions = "Michelle Nino De Guzman" # ! this needs to be in a hidden file
 
 overtime_8 = 8
 date_created = datetime.datetime.now()  # Get the current date and time
@@ -27,7 +33,7 @@ with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overti
     if len(row) == 2 and 'Total Hours' not in row[0]: # this is how we know its a name and a number
       number = float(row[1])
       if number > 0:
-        names.append(row[0])
+        names.append(row[0].lower())
   csvfile.seek(0)
   
   for name in names:
@@ -56,7 +62,9 @@ with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overti
   
   for name in names:
       if name == exceptions:
-          overtime = overtime_8
+          overtimeHours = overtime_8
+      else:
+          overtimeHours = overtime
 
       for date in dates:
           total = 0
@@ -65,12 +73,16 @@ with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/overti
               if date in row and name in row and len(row) > 3:
                   total += float(row[4])
 
-          if total > overtime:
-              writer.writerow([name, date, round(total-overtime, 3)])
+          if total > overtimeHours:
+              writer.writerow([name, date, round(total-overtimeHours, 3)])
               
               overtime_dict[name] = True
 
           csvfile.seek(0)
+          
+          print(name)
+          print(overtimeHours)
+          
 
       # for name, has_overtime in overtime_dict.items():
         # if has_overtime:

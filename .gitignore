@@ -1,1 +1,7 @@
-Timesheets Report.csv
+# Sierra Lighting Variables
+
+.env
+
+# Data
+
+*.csv

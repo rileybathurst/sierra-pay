@@ -1,6 +1,11 @@
-# hard coded to adam how many hours per day
+# hard coded to the test name how many hours per day
 
 import csv
+
+with open('.env', 'r') as f:
+    for line in f:
+        if 'test' in line:
+            test = line.strip()
 
 names = []
 overtime = 10 # so I can test it
@@ -20,9 +25,9 @@ with open('Timesheets Report.csv', newline='') as csvfile, open('exports/twelve.
   csvfile.seek(0)
 
   for row in reader:
-    if len(row) > 2 and row[0] == 'Adam Paul' and row[1] not in dates:
+    if len(row) > 2 and row[0] == test and row[1] not in dates:
       
-      # creates the dates adam worked
+      # creates the dates the test name worked
       # writer.writerow([row[1]])
       # writer.writerow([])
       dates.append(row[1])
