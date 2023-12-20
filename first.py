@@ -6,7 +6,15 @@ date_str = date_created.strftime("%Y-%m-%d")  # Format the date as a string
 
 header = "Name"
 
-with open('Timesheets Report.csv', newline='') as csvfile, open(f'exports/Times_{date_str}.csv', 'w', newline='') as output_file:
+try:
+    csvfile = open('Timesheets Report1.csv', newline='')
+    location = 'pay'
+    
+except FileNotFoundError:
+    csvfile = open('Timesheets Report.csv', newline='')
+    location = 'Jobber Reports'
+
+with csvfile, open(f'exports/Times_{date_str}.csv', 'w', newline='') as output_file:
     reader = csv.reader(csvfile)
     writer = csv.writer(output_file)
 

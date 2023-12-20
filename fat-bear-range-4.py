@@ -4,7 +4,7 @@
 # this caluates if someone worked more than 40 hours in a week
 import pandas as pd
 
-sierra = pd.read_csv("Timesheets Report 11_27_2023-12_10_2023-2.csv", on_bad_lines='skip', skiprows=1)
+sierra = pd.read_csv("Times_{date_str}.csv", )
 
 # Convert the "Date" column to a datetime type
 sierra["Date"] = pd.to_datetime(sierra["Date"])
@@ -27,8 +27,6 @@ if start_date.day_name() == "Monday":
 
     # Print the number of weeks
     print(f"There are {len(weeks)} weeks.")
-    
-    
 
     # Loop over each date in the sequence
     for start_of_week in weeks:
@@ -38,6 +36,16 @@ if start_date.day_name() == "Monday":
         # Initialize a flag for each week
         printed_week = {start_of_week: False for start_of_week in weeks}
         print(week)
+        
+    # Create a DataFrame from the weeks series
+    weeks_df = pd.DataFrame(weeks, columns=["Week Start Date"])
+    
+    # Format the start and end dates as strings
+    start_date_str = start_date.strftime("%Y-%m-%d")
+    end_date_str = end_date.strftime("%Y-%m-%d")
+    
+    # Write the DataFrame to a CSV file
+    weeks_df.to_csv(f"exports/weeks_{start_date_str}_to_{end_date_str}.csv", index=False)
 
 
 # * this might be kinda a major issue we just deal with at another time
