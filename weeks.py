@@ -19,6 +19,8 @@ sierra["Date"] = pd.to_datetime(sierra["Date"])
 
 non_week_dates = []
 
+week_numbers = {}
+
 # Get the earliest and latest dates
 sheet_start_date = sierra["Date"].min()
 sheet_end_date = sierra["Date"].max()
@@ -74,6 +76,15 @@ else:
   
 for i, week_start in enumerate(weeks, start=1):
     print(f"Week {i} starts on {week_start.day_name()}, {week_start.date()}")
+    
+    # week_numbers[i] = "week_" + str(i)
+    week_numbers["week_" + str(i)] = str(week_start)
+    
+
+print(week_numbers)
+
+# ? do I add all the other dates to week_numbers?
+
 
 # Generate a sequence of all dates from the start date to the end date
 all_dates = pd.date_range(start=sheet_start_date, end=sheet_end_date)

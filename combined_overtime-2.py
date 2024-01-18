@@ -38,10 +38,12 @@ all_dates = pd.date_range(start=start_date, end=end_date)
 total_overtime_hours = {}
 
 # Initialize a list to store the names and weeks of people with overtime
-overtime_details = []
+overtime_details = {}
 
 # Loop over each name
 for name in names:
+  
+  # ! testing
   if name == "Bex Howard":
   
     for i, week_start in enumerate(weeks.weeks, start=1):
@@ -58,3 +60,66 @@ for name in names:
         weekly_overtime_hours = total_weekly_hours - 40
         # print(f"{name} worked {total_weekly_hours} hours in the week starting {date.strftime('%Y-%m-%d')} ({date.day_name()}), which is {round(weekly_overtime_hours, 2)} hours of overtime.")
         print(f"{name} worked {total_weekly_hours} hours in the week starting {week_start.date()} ({week_start.day_name()}), which is {round(weekly_overtime_hours, 2)} hours of overtime.")
+        
+        for i in range(7):
+          # print(week_start.date() + pd.DateOffset(days=i))
+          
+          today = week_start.date() + pd.DateOffset(days=i)
+
+          # I know this is weird and bad and double but just trying to get past it
+          overtime_details[(name, today.strftime('%Y-%m-%d'))] = today.strftime('%Y-%m-%d')
+    
+print(overtime_details)
+
+# Loop over each name
+for name in names:
+  
+  # ! testing
+  if name == "Bex Howard":
+    # Filter the DataFrame for rows where the "Name" column is the current name
+    entries = sierra[sierra["Name"] == name]
+
+    # Group by date and sum the hours
+    hours = entries.groupby("Date")["Hours"].sum()
+
+    # Loop over the hours Series
+    for date, total_hours in hours.items():
+      # If the name is in the exceptions file, use 8 hours as the limit
+      if name == exceptions:
+        limit = 8
+      else:
+        limit = 10
+
+      # If the total hours are more than the limit
+      if total_hours > limit:
+        # Calculate how much over the limit the person worked
+        over = round(total_hours - limit, 4)
+
+        # Print the date and how much over they were
+        # print(f"On {date.date()}, {name} worked {over} hours over {limit} hours.")
+        
+        # Check if this name and date are in overtime_details
+        if any(name == overtime_name and date.strftime('%Y-%m-%d') == overtime_date for overtime_name, overtime_date in overtime_details):
+            print(f"On {date.date()}, {name} worked {over} hours over {limit} hours. They also had weekly overtime on {date.date()}.")
+            
+            print("🦄")
+            # TODO: which week is this in?
+            
+            print(weeks.week_numbers["week_1"])
+            
+        else:
+            print(f"On {date.date()}, {name} worked {over} hours over {limit} hours. They did not have weekly overtime on {date.date()}.")
+          
+        # Add the overtime hours to the total overtime hours for the name
+        if name in total_overtime_hours:
+          total_overtime_hours[name] += over
+        else:
+          total_overtime_hours[name] = over
+        
+
+        
+
+
+# Print the total overtime hours for each name
+for name, overtime_hours in total_overtime_hours.items():
+  print(f"{name} worked a total of {round(overtime_hours, 2)} daily overtime hours.")
