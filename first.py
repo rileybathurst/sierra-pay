@@ -14,7 +14,7 @@ except FileNotFoundError:
     csvfile = open('Timesheets Report.csv', newline='')
     location = 'Jobber Reports'
 
-with csvfile, open(f'exports/Times_{date_str}.csv', 'w', newline='') as output_file:
+with csvfile, open(f'Times_{date_str}.csv', 'w', newline='') as output_file:
     reader = csv.reader(csvfile)
     writer = csv.writer(output_file)
 
