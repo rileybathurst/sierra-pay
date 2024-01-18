@@ -27,19 +27,14 @@ sierra["Date"] = pd.to_datetime(sierra["Date"])
 start_date = sierra["Date"].min()
 end_date = sierra["Date"].max()
 
-# print(f"The earliest date is {start_date.date()}.")
-# print(f"The latest date is {end_date.date()}.")
+print(f"The earliest date is {start_date.date()}.")
+print(f"The latest date is {end_date.date()}.")
 
 # Get the unique names
 names = sierra["Name"].unique()
 
 # Get the day of the week for the start date
 start_day = start_date.day_name()
-
-# print(f"The start date is a {start_day}.")
-
-# Generate a sequence of the first 7 dates from the start date
-first_7_days = pd.date_range(start=start_date, periods=7)
 
 # Generate a sequence of all dates from the start date to the end date
 all_dates = pd.date_range(start=start_date, end=end_date)
@@ -52,10 +47,12 @@ overtime_details = []
 
 # Loop over each date in the sequence
 for date in all_dates:
+  
   # If the date is a Monday
   if date.day_name() == "Monday":
+    
     # Generate a sequence of 7 days starting from the date
-    week = pd.date_range(start=date, periods=7)
+    weeks = pd.date_range(start=date, periods=7)
 
     # Loop over each name
     for name in names:
@@ -65,8 +62,8 @@ for date in all_dates:
         # Filter the DataFrame for rows where the "Name" column is the current name
         entries = sierra[sierra["Name"] == name]
 
-        # Filter for rows where the "Date" is in the week
-        week_entries = entries[entries["Date"].isin(week)]
+        # Filter for rows where the "Date" is in the weeks
+        week_entries = entries[entries["Date"].isin(weeks)]
 
         # Sum the hours for the week
         total_weekly_hours = week_entries["Hours"].sum()
@@ -78,7 +75,7 @@ for date in all_dates:
           print(f"{name} worked {total_weekly_hours} hours in the week starting {date.strftime('%Y-%m-%d')} ({date.day_name()}), which is {round(weekly_overtime_hours, 2)} hours of overtime.")
 
           # Add each day of the week to the overtime details
-          for day in week:
+          for day in weeks:
             overtime_details.append((name, day.strftime('%Y-%m-%d')))
 
 # print(overtime_details)
