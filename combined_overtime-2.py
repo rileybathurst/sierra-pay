@@ -1,6 +1,6 @@
 # https://www.dir.ca.gov/dlse/faq_overtime.htm
 # shall not be employed more than eight hours in any workday or more than 40 hours in any workweek
-# or more than six days in any workweek
+# TODO: or more than six days in any workweek
 
 # this isnt finished yet, need to figure out which is bigger of daily or weekly and if anyone exceeds 6 days
 
@@ -69,7 +69,7 @@ for name in names:
           # I know this is weird and bad and double but just trying to get past it
           overtime_details[(name, today.strftime('%Y-%m-%d'))] = today.strftime('%Y-%m-%d')
     
-print(overtime_details)
+# print(overtime_details)
 
 # Loop over each name
 for name in names:
@@ -101,25 +101,40 @@ for name in names:
         # Check if this name and date are in overtime_details
         if any(name == overtime_name and date.strftime('%Y-%m-%d') == overtime_date for overtime_name, overtime_date in overtime_details):
             print(f"On {date.date()}, {name} worked {over} hours over {limit} hours. They also had weekly overtime on {date.date()}.")
-            
-            print("🦄")
-            # TODO: which week is this in?
-            
-            print(weeks.week_numbers["week_1"])
-            
+
+            # print(date.date())
+
+            value = date.date()
+
+            for key, val in weeks.week_numbers.items():
+                if value in val:
+                    print(f"the date is in {key}")
+                    
+                    # add the daily overtime to a vriable counting that week
+                    # print(weeks.week_numbers[key])
+                    weeks.week_numbers[key].append(over)
+                    
+                    # print(weeks.week_daily_overtime)
+                    # print(weeks.week_daily_overtime['week_1_daily_overtime'])
+                    
+                    # print(weeks.week_daily_overtime[f'{key}_daily_overtime'])
+                    
+                    # weeks.week_daily_overtime[f'{key}_daily_overtime'].sum(over)
+                    weeks.week_daily_overtime[f'{key}_daily_overtime'] += over
+                    
         else:
             print(f"On {date.date()}, {name} worked {over} hours over {limit} hours. They did not have weekly overtime on {date.date()}.")
           
         # Add the overtime hours to the total overtime hours for the name
-        if name in total_overtime_hours:
-          total_overtime_hours[name] += over
-        else:
-          total_overtime_hours[name] = over
-        
-
-        
-
+        # if name in total_overtime_hours:
+          # total_overtime_hours[name] += over
+        # else:
+          # total_overtime_hours[name] = over
 
 # Print the total overtime hours for each name
-for name, overtime_hours in total_overtime_hours.items():
-  print(f"{name} worked a total of {round(overtime_hours, 2)} daily overtime hours.")
+# for name, overtime_hours in total_overtime_hours.items():
+  # print(f"{name} worked a total of {round(overtime_hours, 2)} daily overtime hours.")
+
+
+print(weeks.week_numbers)
+print(weeks.week_daily_overtime)
