@@ -1,8 +1,9 @@
 # https://www.dir.ca.gov/dlse/faq_overtime.htm
 # shall not be employed more than eight hours in any workday or more than 40 hours in any workweek
-# TODO: or more than six days in any workweek
 
 # TODO: days that are not involved in weeks might not be counted I need to check
+
+# I need to write more data frames from pandas instead of dictionaries and arrays
 
 # this isnt finished yet, need to figure out which is bigger of daily or weekly and if anyone exceeds 6 days
 
