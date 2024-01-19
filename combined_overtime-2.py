@@ -2,6 +2,8 @@
 # shall not be employed more than eight hours in any workday or more than 40 hours in any workweek
 # TODO: or more than six days in any workweek
 
+# TODO: days that are not involved in weeks might not be counted I need to check
+
 # this isnt finished yet, need to figure out which is bigger of daily or weekly and if anyone exceeds 6 days
 
 import pandas as pd
@@ -113,13 +115,8 @@ for name in names:
                     # add the daily overtime to a vriable counting that week
                     # print(weeks.week_numbers[key])
                     weeks.week_numbers[key].append(over)
-                    
-                    # print(weeks.week_daily_overtime)
-                    # print(weeks.week_daily_overtime['week_1_daily_overtime'])
-                    
+
                     # print(weeks.week_daily_overtime[f'{key}_daily_overtime'])
-                    
-                    # weeks.week_daily_overtime[f'{key}_daily_overtime'].sum(over)
                     weeks.week_daily_overtime[f'{key}_daily_overtime'] += over
                     
         else:
@@ -136,5 +133,5 @@ for name in names:
   # print(f"{name} worked a total of {round(overtime_hours, 2)} daily overtime hours.")
 
 
-print(weeks.week_numbers)
+# print(weeks.week_numbers)
 print(weeks.week_daily_overtime)
