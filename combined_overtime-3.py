@@ -1,4 +1,5 @@
-# https://www.dir.ca.gov/dlse/faq_overtime.htm
+#%%
+# # https://www.dir.ca.gov/dlse/faq_overtime.htm
 # shall not be employed more than eight hours in any workday or more than 40 hours in any workweek
 
 # TODO: days that are not involved in weeks might not be counted I need to check
@@ -43,9 +44,9 @@ total_overtime_hours = {}
 
 # Initialize a list to store the names and weeks of people with overtime
 overtime_details = {}
+for name in names:
 
 # Loop over each name
-for name in names:
   
   # ! testing
   if name == "Bex Howard":
